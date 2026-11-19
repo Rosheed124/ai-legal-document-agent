@@ -53,7 +53,8 @@
 | **Accept All AI Fixes** | Marks all clauses resolved and lowers score to 18/100 | ✅ Verified Functional |
 | **Append Safeguard Buttons** | Appends missing legal clause directly to contract text | ✅ Verified Functional |
 | **Copy Forum Details** | Copies governing law facts to clipboard | ✅ Verified Functional |
-| **Export Report Button** | Downloads complete timestamped Markdown audit document | ✅ Verified Functional |
+| **Export PDF Button** | Generates & downloads multi-page vector PDF (.pdf) with executive styling | ✅ Verified Functional |
+| **Export Markdown Button** | Downloads complete timestamped Markdown audit document (.md) | ✅ Verified Functional |
 | **Share Summary Button** | Copies summary to clipboard with toast notification | ✅ Verified Functional |
 | **Theme Toggle Button** | Switches light/dark theme, updates HTML class and localStorage | ✅ Verified Functional |
 | **GitHub Header Link** | Opens repository in new secure browser tab | ✅ Verified Functional |
