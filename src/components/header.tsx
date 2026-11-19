@@ -7,16 +7,20 @@ import {
   Scale,
   Sun,
   Moon,
-  Download,
+  FileDown,
+  FileText,
   Share2,
   Check,
   Github,
   ShieldCheck,
+  Loader2,
 } from "lucide-react";
 // Import theme hook
 import { useTheme } from "./theme-provider";
 // Import analysis result type for the export action
 import { AnalysisResult } from "@/lib/types";
+// Import PDF generator function
+import { generatePdfReport } from "@/lib/pdf-generator";
 
 // Component props interface
 interface HeaderProps {
@@ -30,8 +34,10 @@ export function Header({ analysis }: HeaderProps) {
   const { theme, toggleTheme } = useTheme();
   // State tracking whether the share link was recently clicked
   const [copiedShare, setCopiedShare] = useState<boolean>(false);
-  // State tracking whether export download is occurring
-  const [isExporting, setIsExporting] = useState<boolean>(false);
+  // State tracking whether markdown export is occurring
+  const [isExportingMd, setIsExportingMd] = useState<boolean>(false);
+  // State tracking whether PDF export is occurring
+  const [isExportingPdf, setIsExportingPdf] = useState<boolean>(false);
 
   // Handle copying a summary of the audit to the user's clipboard
   const handleShare = async () => {
@@ -47,10 +53,29 @@ export function Header({ analysis }: HeaderProps) {
     }, 2000);
   };
 
-  // Handle exporting the complete audit report as a downloadable Markdown file
-  const handleExport = () => {
+  // Handle exporting the audit report directly as a downloadable PDF document
+  const handleExportPdf = () => {
+    // Set loading indicator
+    setIsExportingPdf(true);
+    // Small timeout to allow UI spinner to render smoothly
+    setTimeout(() => {
+      try {
+        // Run jsPDF multi-page document generator
+        generatePdfReport(analysis);
+      } catch (err) {
+        // Log any error if encountered
+        console.error("PDF generation error:", err);
+      } finally {
+        // Reset loading state
+        setIsExportingPdf(false);
+      }
+    }, 150);
+  };
+
+  // Handle exporting the complete audit report as a downloadable Markdown (.md) file
+  const handleExportMarkdown = () => {
     // Start exporting state
-    setIsExporting(true);
+    setIsExportingMd(true);
     // Build a structured markdown report
     const markdownContent = `# ⚖️ LexAgent AI — Contract Audit & Risk Assessment Report
 
@@ -141,7 +166,7 @@ ${analysis.missingSafeguards
     // Revoke object URL to free memory
     URL.revokeObjectURL(url);
     // Reset export state
-    setIsExporting(false);
+    setIsExportingMd(false);
   };
 
   // Render header layout
@@ -170,7 +195,7 @@ ${analysis.missingSafeguards
         </div>
 
         {/* Action buttons and controls */}
-        <div className="flex items-center gap-2.5 flex-wrap">
+        <div className="flex items-center gap-2 flex-wrap">
           {/* GitHub link button */}
           <a
             href="https://github.com/Rosheed124/ai-legal-document-agent"
@@ -202,15 +227,34 @@ ${analysis.missingSafeguards
             )}
           </button>
 
+          {/* Export PDF report button */}
+          <button
+            onClick={handleExportPdf}
+            disabled={isExportingPdf}
+            title="Download formatted audit report as PDF (.pdf)"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-red-600 hover:bg-red-700 text-white shadow-sm shadow-red-600/30 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50"
+          >
+            {isExportingPdf ? (
+              <Loader2 className="w-3.5 h-3.5 animate-spin" />
+            ) : (
+              <FileDown className="w-3.5 h-3.5" />
+            )}
+            <span>Export PDF</span>
+          </button>
+
           {/* Export markdown report button */}
           <button
-            onClick={handleExport}
-            disabled={isExporting}
-            title="Download complete audit report as Markdown"
-            className="flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-semibold rounded-lg bg-blue-600 hover:bg-blue-700 text-white shadow-sm shadow-blue-600/30 transition-all hover:scale-[1.02] active:scale-[0.98]"
+            onClick={handleExportMarkdown}
+            disabled={isExportingMd}
+            title="Download audit report as Markdown (.md)"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-blue-600 hover:bg-blue-700 text-white shadow-sm shadow-blue-600/30 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50"
           >
-            <Download className="w-3.5 h-3.5" />
-            <span>Export Report</span>
+            {isExportingMd ? (
+              <Loader2 className="w-3.5 h-3.5 animate-spin" />
+            ) : (
+              <FileText className="w-3.5 h-3.5" />
+            )}
+            <span>Export Markdown</span>
           </button>
 
           {/* Theme switcher button */}
