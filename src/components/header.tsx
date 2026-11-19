@@ -54,22 +54,19 @@ export function Header({ analysis }: HeaderProps) {
   };
 
   // Handle exporting the audit report directly as a downloadable PDF document
-  const handleExportPdf = () => {
+  const handleExportPdf = async () => {
     // Set loading indicator
     setIsExportingPdf(true);
-    // Small timeout to allow UI spinner to render smoothly
-    setTimeout(() => {
-      try {
-        // Run jsPDF multi-page document generator
-        generatePdfReport(analysis);
-      } catch (err) {
-        // Log any error if encountered
-        console.error("PDF generation error:", err);
-      } finally {
-        // Reset loading state
-        setIsExportingPdf(false);
-      }
-    }, 150);
+    try {
+      // Run jsPDF multi-page document generator
+      await generatePdfReport(analysis);
+    } catch (err) {
+      // Log any error if encountered
+      console.error("PDF generation error:", err);
+    } finally {
+      // Reset loading state
+      setIsExportingPdf(false);
+    }
   };
 
   // Handle exporting the complete audit report as a downloadable Markdown (.md) file

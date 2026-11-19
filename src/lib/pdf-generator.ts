@@ -1,10 +1,11 @@
-// Import the jsPDF library to generate real PDF documents right inside the user's browser
-import { jsPDF } from "jspdf";
 // Import data types for analysis results
 import { AnalysisResult } from "./types";
 
 // Function to generate and immediately download a clean, multi-page PDF audit report
-export function generatePdfReport(analysis: AnalysisResult): void {
+export async function generatePdfReport(analysis: AnalysisResult): Promise<void> {
+  // Dynamically load jsPDF on the client side only when user clicks export (avoids SSR issues)
+  const { jsPDF } = await import("jspdf");
+
   // Create a new PDF document in portrait orientation with millimeters as units and A4 page size
   const doc = new jsPDF({
     orientation: "portrait",
