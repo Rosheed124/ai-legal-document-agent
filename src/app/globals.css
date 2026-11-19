@@ -1,0 +1,90 @@
+/* Import Tailwind CSS base element styling rules */
+@tailwind base;
+/* Import Tailwind CSS reusable utility component classes */
+@tailwind components;
+/* Import Tailwind CSS individual utility classes */
+@tailwind utilities;
+
+/* Root color variables for light mode */
+:root {
+  /* Soft warm parchment background color for easy reading of legal documents */
+  --legal-canvas: #f8fafc;
+  /* Clean crisp white surface for primary cards and content panels */
+  --legal-surface: #ffffff;
+  /* Subdued soft gray for inner quote boxes and code snippets */
+  --legal-subtle: #f1f5f9;
+  /* Subtle gray border color for clean structural framing */
+  --legal-border: #e2e8f0;
+  /* Deep navy-charcoal color for high contrast text readability */
+  --legal-text: #0f172a;
+  /* Muted slate color for labels, captions, and secondary notes */
+  --legal-muted: #64748b;
+  /* Authoritative royal blue for primary interactive buttons and AI accents */
+  --legal-accent: #2563eb;
+  /* Rich crimson red indicating high-liability legal danger */
+  --legal-danger: #dc2626;
+  /* Warm amber orange indicating moderate risk items needing review */
+  --legal-warning: #d97706;
+  /* Crisp emerald green indicating compliant standard terms and resolved issues */
+  --legal-success: #16a34a;
+}
+
+/* Root color variables for dark mode */
+.dark {
+  /* Deep midnight navy background reducing eye strain during night sessions */
+  --legal-canvas: #0b0f19;
+  /* Slightly elevated slate card surface */
+  --legal-surface: #111827;
+  /* Dark inset container background */
+  --legal-subtle: #1f2937;
+  /* Muted border line color for subtle division */
+  --legal-border: #374151;
+  /* Clean white-ivory text for crystal clear contrast */
+  --legal-text: #f9fafb;
+  /* Soft gray muted text for secondary details */
+  --legal-muted: #9ca3af;
+  /* Bright vibrant sapphire blue for interactive highlights */
+  --legal-accent: #3b82f6;
+  /* Bright crimson red for high liability warnings */
+  --legal-danger: #ef4444;
+  /* Vibrant amber for moderate caution alerts */
+  --legal-warning: #f59e0b;
+  /* Bright emerald green for approved clauses */
+  --legal-success: #22c55e;
+}
+
+/* Base body styles */
+body {
+  /* Apply the canvas background variable */
+  background-color: var(--legal-canvas);
+  /* Apply the primary text color variable */
+  color: var(--legal-text);
+  /* Smooth transition when switching between light and dark themes */
+  transition: background-color 0.25s ease, color 0.25s ease;
+  /* Ensure smooth scrolling across the page */
+  scroll-behavior: smooth;
+  /* Use clean system font stack */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Custom scrollbar track */
+::-webkit-scrollbar {
+  /* Set width of scrollbar */
+  width: 8px;
+  /* Set height for horizontal scrollbars */
+  height: 8px;
+}
+
+/* Custom scrollbar thumb */
+::-webkit-scrollbar-thumb {
+  /* Rounded pill shape */
+  border-radius: 9999px;
+  /* Soft gray color */
+  background-color: rgba(156, 163, 175, 0.4);
+}
+
+/* Custom scrollbar thumb on hover */
+::-webkit-scrollbar-thumb:hover {
+  /* Darker gray when hovering */
+  background-color: rgba(156, 163, 175, 0.7);
+}

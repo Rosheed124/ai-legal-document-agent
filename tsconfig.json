@@ -1,0 +1,66 @@
+{
+  // Compiler options tell the TypeScript compiler how to check our code and convert it
+  "compilerOptions": {
+    // Target modern JavaScript features that modern browsers understand
+    "target": "ES2017",
+    // Use the latest standard way of importing and exporting modules
+    "module": "esnext",
+    // Let Next.js handle finding where imported files live
+    "moduleResolution": "bundler",
+    // Allow importing JSON data files directly into our code
+    "resolveJsonModule": true,
+    // Make sure older style and newer style modules play nicely together
+    "esModuleInterop": true,
+    // Enable the strictest type safety checks to catch bugs before they happen
+    "strict": true,
+    // Next.js handles creating the final output files, so TypeScript does not need to emit them
+    "noEmit": true,
+    // Keep JSX elements intact so Next.js can process them
+    "jsx": "preserve",
+    // Remember previous build info to make compiling much faster
+    "incremental": true,
+    // Use React's modern JSX transform without needing 'import React' on every page
+    "jsxImportSource": "react",
+    // Allow regular JavaScript files in the project alongside TypeScript
+    "allowJs": true,
+    // Skip checking library types inside node_modules to speed things up
+    "skipLibCheck": true,
+    // Ensure all file names use the exact same uppercase and lowercase letters everywhere
+    "forceConsistentCasingInFileNames": true,
+    // Enable decorator features for modern libraries
+    "experimentalDecorators": true,
+    // Set the base folder for file resolution to the root of our project
+    "baseUrl": ".",
+    // Create an '@/' shortcut so we can import from './src/' easily from any folder
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    },
+    // Plug in Next.js's official TypeScript plugin
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    // Include browser tools and the latest standard library features
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    // Ensure each file can be safely converted by itself without knowing about others
+    "isolatedModules": true
+  },
+  // Files and folders TypeScript should check
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts"
+  ],
+  // Folders TypeScript should ignore
+  "exclude": [
+    "node_modules"
+  ]
+}

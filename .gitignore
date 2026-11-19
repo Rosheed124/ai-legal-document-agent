@@ -1,0 +1,21 @@
+# Operating system temp files
+Thumbs.db
+.DS_Store
+
+# Node packages folder installed by npm
+/node_modules
+
+# Next.js build output directory
+/.next
+/out
+
+# Vitest and test coverage reports
+/coverage
+
+# Local environment variables files containing secrets
+.env*.local
+.env
+
+# TypeScript build info cache
+*.tsbuildinfo
+next-env.d.ts
