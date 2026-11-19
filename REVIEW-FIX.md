@@ -18,7 +18,7 @@
   \`\`\`ts
   const overallScore = Math.min(100, Math.round(maxCategoryScore * 0.5 + activeAvg * 0.5));
   \`\`\`
-- **Verification:** All 5 Vitest tests pass with high danger scores for one-sided agreements.
+- **Verification:** All Vitest tests pass with high danger scores for one-sided agreements.
 
 ---
 
@@ -42,12 +42,23 @@
 
 ---
 
+### 4. Webpack Runtime Cache Invalidation & Dynamic PDF Import
+- **Severity:** Medium (Runtime Dev Error)
+- **Files:** `src/lib/pdf-generator.ts`, `src/components/header.tsx`
+- **Symptom:** `TypeError: Cannot read properties of undefined (reading 'call')` in dev mode.
+- **Root Cause:** Running `next build` while `next dev` was concurrently running corrupted the in-memory Webpack chunk loader. Additionally, a top-level static import of `jspdf` triggered bundling issues during React Server Component streaming.
+- **Resolution:** Converted `jspdf` import to a lazy dynamic import (`const { jsPDF } = await import("jspdf")`), wiped `.next/` cache, and restarted `next dev` cleanly.
+- **Verification:** Zero Webpack runtime errors; page loads cleanly with instant PDF & Markdown downloads.
+
+---
+
 ## 📊 Quality Summary
 
 | Metric | Target | Result | Status |
 | :--- | :--- | :--- | :--- |
-| **Vitest Unit Tests** | 5 / 5 Passing | 5 Passed (100%) | ✅ Pass |
+| **Vitest Unit Tests** | 6 / 6 Passing | 6 Passed (100%) | ✅ Pass |
 | **ESLint Warnings/Errors** | 0 Warnings, 0 Errors | 0 Warnings, 0 Errors | ✅ Pass |
 | **TypeScript Strict Checking** | 0 Type Errors | 0 Errors | ✅ Pass |
 | **Next.js Production Build** | Exit Code 0 | Exit Code 0 | ✅ Pass |
+| **Dual Export Output** | PDF (.pdf) + Markdown (.md) | Both Verified & Downloadable | ✅ Pass |
 | **Interactive Controls** | 100% Functional | 0 Dead UI Elements | ✅ Pass |
